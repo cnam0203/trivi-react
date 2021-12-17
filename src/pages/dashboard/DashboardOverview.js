@@ -101,7 +101,7 @@ export default () => {
   }
 
   useEffect(() => {
-    fetch(domainPath + 'home/', {
+    fetch(domainPath + 'dimadb/home/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

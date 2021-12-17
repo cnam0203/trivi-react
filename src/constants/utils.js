@@ -1,1 +1,1 @@
-export const domainPath = "http://localhost:8000/dimadb/"
+export const domainPath = "http://localhost:8000/"

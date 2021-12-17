@@ -29,7 +29,7 @@ export default () => {
 
   useEffect(() => {
       const id = location.pathname.split('/').pop();
-      const url = domainPath + `product/${productType}/${id}`; 
+      const url = domainPath + `dimadb/product/${productType}/${id}`; 
       fetch(url, {
         method: 'GET',
         headers: {
@@ -73,7 +73,7 @@ export default () => {
 
   const handleDeleteProduct = () => {
     // e.preventDefault();
-    const url = domainPath + `product/${productType}/${productID}/`;
+    const url = domainPath + `dimadb/product/${productType}/${productID}/`;
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -97,7 +97,7 @@ export default () => {
   const handlePostNewProduct = (e) => {
     e.preventDefault();
     const id = location.pathname.split('/').pop();
-    var url = domainPath + `product/${productType}/`;
+    var url = domainPath + `dimadb/product/${productType}/`;
     var method = '';
 
     alert(id);

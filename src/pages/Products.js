@@ -16,7 +16,7 @@ export default () => {
   const columns = searchProducts.length ? Object.keys(searchProducts[0]).map(key => {return {Header: key, accessor: key}}) : []; 
 
   useEffect(() => {
-      fetch(domainPath + 'product/', {
+      fetch(domainPath + 'dimadb/product/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

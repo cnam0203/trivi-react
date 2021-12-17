@@ -15,7 +15,7 @@ export default () => {
   const activityTypes = ['like', 'intend-to-buy', 'view', 'share', 'search'];
 
   useEffect(() => {
-      fetch(domainPath + 'activity/', {
+      fetch(domainPath + 'dimadb/activity/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

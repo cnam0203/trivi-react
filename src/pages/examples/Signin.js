@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Form, Card, Container, InputGroup, Image } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Card, Container, InputGroup, Image, Button } from '@themesberg/react-bootstrap';
 import ReactLogo from "../../assets/img/technologies/logo.svg";
 import {domainPath} from '../../constants/utils';
 import BgImage from "../../assets/img/illustrations/signin.svg";
@@ -29,7 +29,7 @@ export default class Signin extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    fetch(domainPath + '/token-auth/', {
+    fetch(domainPath + 'token-auth/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
