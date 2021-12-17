@@ -45,7 +45,8 @@ export default class Signin extends Component {
         } else {
           alert("Your account is invalid");
         }
-      });
+      })
+      .catch(err => alert(err))
   };
 
 

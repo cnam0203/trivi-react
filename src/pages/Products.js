@@ -26,7 +26,7 @@ export default () => {
       .then(res => res.json())
       .then(json => {
         setAllProducts(json, 3);
-      });
+      })
   }, []);
 
   const setAllProducts = (json, level=3) => {
