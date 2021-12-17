@@ -1,13 +1,10 @@
 
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup, Image } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
+import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row, Form, Card, Container, InputGroup, Image } from '@themesberg/react-bootstrap';
 import ReactLogo from "../../assets/img/technologies/logo.svg";
-
-import { Routes } from "../../routes";
+import {domainPath} from '../../constants/utils';
 import BgImage from "../../assets/img/illustrations/signin.svg";
 
 
@@ -32,7 +29,7 @@ export default class Signin extends Component {
 
   handle_login = (e, data) => {
     e.preventDefault();
-    fetch('http://localhost:8000/token-auth/', {
+    fetch(domainPath + '/token-auth/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
