@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Col, Row, Form, Container, Button, Modal } from '@themesberg/react-bootstrap';
 import { useHistory, useLocation } from "react-router";
 import {domainPath} from '../constants/utils';
+import { TabTitle } from '../constants/generalFunctions';
 
 
 export default () => {
@@ -26,6 +27,9 @@ export default () => {
   const [listDomains, setListDomains] = useState([]);
   const [listOrganizaitons, setListOrganizations] = useState([]);
   const [showDefault, setShowDefault] = useState(false);
+
+
+  TabTitle(`New ${productType}`);
 
   useEffect(() => {
       const id = location.pathname.split('/').pop();

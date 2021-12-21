@@ -5,8 +5,11 @@ import { Col, Row, Container, Button, ButtonGroup, Dropdown, Form, InputGroup } 
 import { CSVLink } from "react-csv";
 import ProcessTables from "./tables/ProcessTables";
 import {domainPath} from '../constants/utils';
+import { TabTitle } from '../constants/generalFunctions';
 
 export default () => {
+  TabTitle('Activities');
+
   const [activities, setActivities] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [searchActivities, setSearchActivities] = useState([]);

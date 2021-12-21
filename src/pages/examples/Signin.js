@@ -6,7 +6,7 @@ import { Col, Row, Form, Card, Container, InputGroup, Image, Button } from '@the
 import ReactLogo from "../../assets/img/technologies/logo.svg";
 import {domainPath} from '../../constants/utils';
 import BgImage from "../../assets/img/illustrations/signin.svg";
-
+import { TabTitle } from '../../constants/generalFunctions';
 
 export default class Signin extends Component {
   constructor(props) {
@@ -51,6 +51,8 @@ export default class Signin extends Component {
 
 
   render() {
+    TabTitle('Log In');
+    
     return (
       <main className="bg-dark vh-100">
         <section className="d-flex align-items-center my-5 mt-lg-8 mb-lg-5">

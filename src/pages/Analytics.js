@@ -3,8 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Row, Container, Form } from '@themesberg/react-bootstrap';
 import Chart from "./components/Chart";
 import {domainPath} from '../constants/utils';
+import { TabTitle } from '../constants/generalFunctions';
+
 
 export default () => {  
+  TabTitle('Data Analytics');
+  
   const [charts, setCharts] = useState([]);
 
   useEffect(() => {

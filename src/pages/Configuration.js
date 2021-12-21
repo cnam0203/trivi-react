@@ -7,9 +7,11 @@ import { Col, Row, Card, Form, Container, InputGroup, Button, Tab, Nav } from '@
 import { useHistory, useLocation } from "react-router";
 
 import Documentation from "../components/Documentation";
+import { TabTitle } from '../constants/generalFunctions';
 
 export default () => {
-
+    TabTitle('Configuration');
+    
     const listUpcomingAlgorithms = ['Base Time Sorting', 'Base Event Sorting'];
     const listSimilarAlgorithms = ['Cosine Similarity', 'Base Event Sorting'];
     const listMostPopularAlgorithms = ['Ponderation with Web Acivity values', 'Base Event Sorting'];
