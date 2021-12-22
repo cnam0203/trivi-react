@@ -9,12 +9,15 @@ import { trafficShares } from "../../data/charts";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import {domainPath} from '../../constants/utils.js';
+import { TabTitle } from '../../constants/generalFunctions';
 
 
 require("highcharts/modules/exporting")(Highcharts);
 require("highcharts/modules/export-data.js")(Highcharts);
 
 export default () => {
+  TabTitle('Dashboard');
+  
   const data = [{
     name: 'Installation',
     data: [{'x': new Date('2021-03-04'), 'y': 43934}, {'x': new Date('2021-03-05'), 'y': 43934}, {'x': new Date('2021-03-06'), 'y': 73934}]

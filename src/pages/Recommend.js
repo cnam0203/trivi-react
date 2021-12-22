@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { Col, Row, Card, Form, Container, Button} from '@themesberg/react-bootstrap';
 import ProcessTables from "./tables/ProcessTables";
+import { TabTitle } from '../constants/generalFunctions';
+
 
 export default () => {
-
+    TabTitle('Recommend');
+    
     const [isSubmitted, setSubmit] = useState(false);
     const [recommendLevel, setRecommendLevel] = useState('');
     const [domain, setDomain] = useState('');

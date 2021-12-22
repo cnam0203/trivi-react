@@ -6,8 +6,12 @@ import { useHistory } from "react-router";
 import { CSVLink } from "react-csv";
 import ProcessTables from "./tables/ProcessTables";
 import {domainPath} from '../constants/utils';
+import { TabTitle } from '../constants/generalFunctions';
+
 
 export default () => {
+  TabTitle('Products');
+  
   const history = useHistory();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);

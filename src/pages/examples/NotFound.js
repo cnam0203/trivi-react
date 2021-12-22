@@ -8,9 +8,12 @@ import { Link } from 'react-router-dom';
 
 import { Routes } from "../../routes";
 import NotFoundImage from "../../assets/img/illustrations/404.svg";
+import { TabTitle } from '../../constants/generalFunctions';
 
 
 export default () => {
+  TabTitle('Not found');
+  
   return (
     <main>
       <section className="vh-100 d-flex align-items-center justify-content-center">
