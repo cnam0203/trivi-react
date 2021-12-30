@@ -87,36 +87,26 @@ export default (props = {}) => {
       </Navbar>
       <CSSTransition timeout={300} in={show} classNames="sidebar-transition">
         <SimpleBar className={`collapse ${showClass} sidebar d-md-block bg-primary text-white`}>
-          <div className="sidebar-inner px-4 pt-3">
+          <div className="sidebar-inner px-1 pt-3">
             <div className="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
-              {/* <div className="d-flex align-items-center">
-                <div className="user-avatar lg-avatar me-4">
-                  <Image src={ProfilePicture} className="card-img-top rounded-circle border-white" />
-                </div>
-                <div className="d-block">
-                  <h6>Hi, Jane</h6>
-                  <Button as={Link} variant="secondary" size="xs" to={Routes.Signin.path} className="text-dark">
-                    <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
-                  </Button>
-                </div>
-              </div> */}
               <Nav.Link className="collapse-close d-md-none" onClick={onCollapse}>
                 <FontAwesomeIcon icon={faTimes} />
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
               <NavItem title="Trivi.ca" link={Routes.Presentation.path} image={Logo} />
-              <NavItem title="Overview" link={Routes.DashboardOverview.path} icon={faChartPie} />
-              <NavItem title="Cultural Products" icon={faCalendarAlt} link={Routes.Products.path} />
-              <NavItem title="Web activities" icon={faDesktop} link={Routes.Activities.path} />
-              <NavItem title="Data analytics / KPI" icon={faChartBar} link={Routes.Analytics.path} />
+              <NavItem title="Aperçu" link={Routes.DashboardOverview.path} icon={faChartPie} />
+              <CollapsableNavItem eventKey="data-management/" title="Gestion des données" icon={faShareAlt}>
+                <NavItem title="Événement" link={Routes.Events.path} />
+                <NavItem title="Article" link={Routes.Articles.path} />
+                <NavItem title="Activité de web" link={Routes.Activities.path} />
+              </CollapsableNavItem>
+              <NavItem title="Analyse des données" icon={faChartBar} link={Routes.Analytics.path} />
               <CollapsableNavItem eventKey="recommend/" title="Recommendation" icon={faShareAlt}>
                 <NavItem title="Configuration" link={Routes.Configuration.path} />
-                <NavItem title="API Integration" link={Routes.Recommend.path} />
+                <NavItem title="Integration d'API" link={Routes.Recommend.path} />
               </CollapsableNavItem>
               <NavItem title="Documentation" icon={faBook} link={Routes.Documentation.path} />
-              {/* <NavItem external title="Calendar" link="https://demo.themesberg.com/volt-pro-react/#/calendar" target="_blank" badgeText="Pro" icon={faCalendarAlt} /> */}
-              {/* <NavItem external title="Map" link="https://demo.themesberg.com/volt-pro-react/#/map" target="_blank" badgeText="Pro" icon={faMapPin} /> */}
 
               {/* <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>
                 <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />
@@ -145,7 +135,7 @@ export default (props = {}) => {
                 <NavItem title="Build Tools" link={Routes.DocsBuild.path} />
                 <NavItem title="Changelog" link={Routes.DocsChangelog.path} />
               </CollapsableNavItem> */}
-              <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>
+              {/* <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>
                 <NavItem title="Accordion" link={Routes.Accordions.path} />
                 <NavItem title="Alerts" link={Routes.Alerts.path} />
                 <NavItem title="Badges" link={Routes.Badges.path} />
@@ -163,7 +153,7 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
               {/* <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} /> */}
               <Button variant="secondary" className="upgrade-to-pro" onClick={handle_logout}><FontAwesomeIcon icon={faSignOutAlt} className="me-1"/>Sign out</Button>
             </Nav>

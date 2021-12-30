@@ -21,10 +21,12 @@ export const Routes = {
     Analytics: {path: "/data-analytics"},
     Documentation: {path: "/documentation"},
     Profile: {path: "/profile"},
-    Products: { path: "/cultural-products/list"},
-    ProductDetail: {path: "/cultural-products/detail/"},
-    Activities: { path: "/web-activities/list"},
-    ActivityForm: {path: "/web-activities/detail/"},
+    Products: { path: "/data-management/cultural-products/list"},
+    ItemDetail: {path: "/data-management/detail/"},
+    Activities: { path: "/data-management/list/web-activity"},
+    Events: { path: "/data-management/list/event"},
+    Articles: { path: "/data-management/list/article"},
+    ListItems: { path: "/data-management/list/" },
 
     // docs
     DocsOverview: { path: "/documentation/overview" },

@@ -3,6 +3,8 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { Routes } from "../routes";
 
 // pages
+import Form from './Form';
+import ListItems from './ListItems';
 import Activities from './Activities';
 import ProductForm from './ProductForm';
 import Configuration from './Configuration';
@@ -127,14 +129,17 @@ export default () => (
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
 
-    <RouteWithSidebar exact path={Routes.Products.path} component={Products} />
-    <RouteWithSidebar exact path={Routes.Activities.path} component={Activities} />
+    <RouteWithSidebar exact path={Routes.Products.path} component={ListItems} />
+    <RouteWithSidebar exact key='web-activity' path={Routes.Activities.path} component={ListItems} />
+    <RouteWithSidebar exact key='event' path={Routes.Events.path} component={ListItems} />
+    <RouteWithSidebar exact key='article' path={Routes.Articles.path} component={ListItems} />
+    <RouteWithSidebar path={Routes.ItemDetail.path} component={Form} />
     <RouteWithSidebar exact path={Routes.Recommend.path} component={Recommend} />
     <RouteWithSidebar exact path={Routes.Configuration.path} component={Configuration} />
     <RouteWithSidebar exact path={Routes.Analytics.path} component={Analytics} />
     <RouteWithSidebar exact path={Routes.Documentation.path} component={Documentation} />
-    <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} />
-    <RouteWithSidebar path={Routes.ProductDetail.path} component={ProductForm} />
+    <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} /> 
+    {/* <RouteWithSidebar path={Routes.ProductDetail.path} component={ProductForm} /> */}
 
     {/* components */}
     <RouteWithSidebar exact path={Routes.Accordions.path} component={Accordion} />

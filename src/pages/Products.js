@@ -58,7 +58,7 @@ export default () => {
   const handleViewDetail = (row) => {
     const type = row['product_type'];
     const id = row['product_id'];
-    const url = `/cultural-products/detail/${type}/${id}`;
+    const url = `/data-management/detail/${type}/${id}`;
     history.push(url);
   }
 
@@ -66,8 +66,8 @@ export default () => {
 
   }
 
-  const handleNewProduct = (e, id) => {
-    const url = `/cultural-products/detail/${e}/${id}`;
+  const handleNewProduct = (e) => {
+    const url = `/data-management/detail/${e}/form`;
     history.push(url);
   }
 
@@ -119,7 +119,7 @@ export default () => {
                 <Dropdown
                   as={ButtonGroup}
                   className="m-1"
-                  onSelect={(e) => handleNewProduct(e, 'form')}
+                  onSelect={(e) => handleNewProduct(e)}
                 >
                   <Button variant="primary">New Product</Button>
                   <Dropdown.Toggle split variant="primary">
