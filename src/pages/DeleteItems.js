@@ -5,74 +5,52 @@ import {
   Col,
   Row,
   Container,
-  Button,
   Form,
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { useHistory, useLocation } from "react-router";
-import { CSVLink } from "react-csv";
 import ProcessTables from "./tables/ProcessTables";
-import { TabTitle, capitalize } from "../constants/generalFunctions";
+import { TabTitle } from "../constants/generalFunctions";
 import { AppContext } from "./AppContext";
 
 export default () => {
-  const {fetchRequest} = useContext(AppContext);
+  TabTitle("Delete Items");
+
+  const { fetchRequest } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
-  const itemType = location.pathname.split("/").slice(-1)[0];
-  const [isViewDetail, setIsViewDetail] = useState(false);
   const [items, setItems] = useState([]);
   const [searchItems, setSearchItems] = useState([]);
-  const headerKeys = searchItems.length
-    ? Object.keys(searchItems[0]).map((key) => {
-        return { label: key, key: key };
-      })
-    : [];
+  const itemType = location.pathname.split("/").slice(-1)[0];
   const columns = searchItems.length
     ? Object.keys(searchItems[0]).map((key) => {
         return { Header: key, accessor: key };
       })
     : [];
 
-  TabTitle(capitalize(itemType));
-
   useEffect(() => {
-    fetchRequest(`dimadb/list-item/${itemType}/`, 'GET')
-    .then((data) => {
-      setAllItems(data.items);
-      setIsViewDetail(data.isViewDetail);
-    }).catch((err) => alert(err));
+    fetchRequest(`dimadb/get-import-info/${itemType}/`, "GET")
+      .then((data) => {
+        setAllItems(data.items);
+      })
+      .catch((err) => alert(err));
   }, []);
+
+  const handleDelete = (importId) => {
+    fetchRequest(
+      `dimadb/delete-multiple-items/${itemType}/${importId}/`,
+      "DELETE"
+    )
+      .then((data) => {
+        alert(`Delete ${itemType} successfully`);
+        history.go(0);
+      })
+      .catch((err) => alert(err));
+  };
 
   const setAllItems = (json, level = 2) => {
     if (level >= 2) setItems(json);
     if (level >= 1) setSearchItems(json);
-  };
-
-  const handleViewDetail = (row) => {
-    const id = row["id"];
-    const url = `/data-management/detail/${itemType}/${id}`;
-    history.push(url);
-  };
-
-  const handleImportFile = (e) => {
-    const url = `/data-management/import-file/${itemType}`;
-    history.push(url);
-  };
-
-  const handleImportAPI = (e) => {
-    const url = `/data-management/import-api/${itemType}`;
-    history.push(url);
-  };
-
-  const handleDeleteItems = (e) => {
-    const url = `/data-management/delete-items/${itemType}`;
-    history.push(url);
-  };
-
-  const handleNewItem = () => {
-    const url = `/data-management/detail/${itemType}/form`;
-    history.push(url);
   };
 
   const searchKeyWord = (keyword) => {
@@ -100,49 +78,11 @@ export default () => {
       <Container className="px-0">
         <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
           <Col className="d-block mb-4 mb-md-0">
-            <h1 className="h2">Tables</h1>
+            <h1 className="h2">Delete Items</h1>
           </Col>
         </Row>
         <Row>
-          <Col xs={9} className="mb-4">
-            {isViewDetail ? (
-              <Button
-                variant="primary"
-                className="m-1"
-                onClick={() => handleNewItem()}
-              >
-                New {itemType}
-              </Button>
-            ) : (
-              <></>
-            )}
-            <Button
-              variant="secondary"
-              className="m-1"
-              onClick={() => handleImportFile()}
-            >
-              Import File
-            </Button>
-            <Button
-              variant="warning"
-              className="m-1"
-              onClick={() => handleImportAPI()}
-            >
-              Import API
-            </Button>
-            <Button variant="tertiary" className="m-1">
-              <CSVLink data={searchItems} headers={headerKeys}>
-                Export CSV
-              </CSVLink>
-            </Button>
-            <Button
-              variant="danger"
-              className="m-1"
-              onClick={() => handleDeleteItems()}
-            >
-              Delete Items
-            </Button>
-          </Col>
+          <Col xs={9} className="mb-4"></Col>
           <Col xs={3} className="mb-4">
             <Form.Group>
               <InputGroup className="input-group-merge">
@@ -169,8 +109,10 @@ export default () => {
           <ProcessTables
             columns={columns}
             data={searchItems}
-            isViewDetail={isViewDetail}
-            handleViewDetail={handleViewDetail}
+            isViewDetail={false}
+            handleViewDetail={() => {}}
+            isDelete={true}
+            handleDelete={handleDelete}
           />
         ) : (
           <></>

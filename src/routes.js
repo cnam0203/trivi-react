@@ -21,12 +21,14 @@ export const Routes = {
     Analytics: {path: "/data-analytics"},
     Documentation: {path: "/documentation"},
     Profile: {path: "/profile"},
-    Products: { path: "/data-management/cultural-products/list"},
     ItemDetail: {path: "/data-management/detail/"},
     Activities: { path: "/data-management/list/web-activity"},
     Events: { path: "/data-management/list/event"},
     Articles: { path: "/data-management/list/article"},
     ListItems: { path: "/data-management/list/" },
+    ImportAPI: { path: "/data-management/import-api/" },
+    ImportFile: { path: "/data-management/import-file/" },
+    DeleteItems: { path: "/data-management/delete-items"},
 
     // docs
     DocsOverview: { path: "/documentation/overview" },
