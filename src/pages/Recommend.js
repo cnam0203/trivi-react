@@ -1,89 +1,150 @@
-import React, {useState} from 'react';
-import { Col, Row, Card, Form, Container, Button} from '@themesberg/react-bootstrap';
+import React, { useState, useEffect, useContext } from "react";
+import {
+  Col,
+  Row,
+  Card,
+  Form,
+  Container,
+  Button,
+} from "@themesberg/react-bootstrap";
 import ProcessTables from "./tables/ProcessTables";
-import { TabTitle } from '../constants/generalFunctions';
-
+import { TabTitle } from "../constants/generalFunctions";
+import { AppContext } from "./AppContext";
 
 export default () => {
-    TabTitle('Recommend');
-    
-    const [isSubmitted, setSubmit] = useState(false);
-    const [recommendLevel, setRecommendLevel] = useState('');
-    const [domain, setDomain] = useState('');
-    const [product, setProduct] = useState('');
-    const [recommendType, setRecommendType] = useState('');
-    const [quantity, setQuantity] = useState(1);
+  TabTitle("Recommend");
 
-    const recommendLevels = [
-        {
-            id: 0,
-            value: 'General level'
-        },
-        {
-            id: 1,
-            value: 'Domain-specific level'
-        }, 
-        {
-            id: 2,
-            value: 'Product-specific level'
-        }];
-    const domains = [
-        {
-            id: 0,
-            value: '1'
-        }, {
-            id: 1,
-            value: '2'
-        }, {
-            id: 2,
-            value: '3'
-        }];
-    const products = [
-        {
-            id: 0,
-            value: '1'
-        }, {
-            id: 1,
-            value: '2'
-        }, {
-            id: 2,
-            value: '3'
-        }];
-    const recommendTypes = [
-        {
-            id: 0,
-            value: 'Upcomming event'
-        }, {
-            id: 1,
-            value: 'Most popular'
-        }];
-    const currentResults = [{
-        'id': 1,
-        'value': 'ACB',
-        'price': 11
-    }, {
-        'id': 2,
-        'value': 'ACB',
-        'price': 11
-    }, {
-        'id': 3,
-        'value': 'ACB',
-        'price': 11
-    }, {
-        'id': 4,
-        'value': 'ACB',
-        'price': 11
+  const listLevels = ["General", "Domain", "Item"];
+  const listItemTypes = [
+    {
+      name: "Événements",
+      value: "events",
+    },
+    {
+      name: "Articles",
+      value: "products",
+    },
+  ];
+  const listRecommendTypes = ["Upcomming", "Most popular"];
 
-    }]
-    const columns = currentResults.length ? Object.keys(currentResults[0]).map(key => {return {Header: key, accessor: key}}) : []; 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setSubmit(!isSubmitted);
+  const { fetchRequest } = useContext(AppContext);
+  const [level, setLevel] = useState("");
+  const [itemType, setItemType] = useState("");
+  const [recommendType, setRecommendType] = useState("");
+  const [quantity, setQuantity] = useState("10");
+  const [listDomains, setListDomains] = useState([]);
+  const [listItems, setListItems] = useState([]);
+  const [domain, setDomain] = useState("");
+  const [item, setItem] = useState("");
+  const [listEvents, setListEvents] = useState([]);
+  const [listProducts, setListProducts] = useState([]);
+  const [listEventTypes, setListEventTypes] = useState([]);
+  const [listArticleTypes, setListArticleTypes] = useState([]);
+  const [isSubmitted, setSubmit] = useState(false);
+  const [listResults, setListResults] = useState([]);
+  const [api, setAPI] = useState("");
+
+  const columns = listResults.length
+    ? Object.keys(listResults[0]).map((key) => {
+        return { Header: key, accessor: key };
+      })
+    : [];
+
+  useEffect(() => {
+    fetchRequest(`dimadb/get-recommend-info/`, "GET")
+      .then((data) => {
+        setListEvents(data.events);
+        setListProducts(data.products);
+        setListEventTypes(data.eventTypes);
+        setListArticleTypes(data.articleTypes);
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    fetchRequest(
+      `dimadb/get-recommend-api/`,
+      "POST",
+      JSON.stringify({
+        level: level,
+        itemType: itemType,
+        recommendType: recommendType,
+        quantity: quantity,
+        domain: domain,
+        item: item,
+      })
+    )
+      .then((data) => {
+        if (data.items) {
+          setSubmit(true);
+          setListResults(data.items);
+          setAPI(data.api);
+        } else {
+          setSubmit(false);
+        }
+      })
+      .catch((err) => {
+        setSubmit(false);
+        alert(err);
+      });
+  };
+
+  const handleChangeItemType = (item) => {
+    if (level === "Domain") {
+      if (item === "events") {
+        setListDomains(listEventTypes);
+      } else if (item === "products") {
+        setListDomains(listArticleTypes);
+      } else {
+        setListDomains([]);
+      }
+    } else if (level === "Item") {
+      if (item === "events") {
+        setListItems(listEvents);
+      } else if (item === "products") {
+        setListItems(listProducts);
+      } else {
+        setListItems([]);
+      }
+    } else {
+      setListDomains([]);
+      setListItems([]);
     }
 
+    setItemType(item);
+  };
+
+  const handleChangeRecommendLevel = (item) => {
+    if (item === "Domain") {
+      if (itemType === "events") {
+        setListDomains(listEventTypes);
+      } else if (itemType === "products") {
+        setListDomains(listArticleTypes);
+      } else {
+        setListDomains([]);
+      }
+    } else if (item === "Item") {
+      if (itemType === "events") {
+        setListItems(listEvents);
+      } else if (itemType === "products") {
+        setListItems(listProducts);
+      } else {
+        setListItems([]);
+      }
+    } else {
+      setListDomains([]);
+      setListItems([]);
+    }
+
+    setLevel(item);
+  };
 
   return (
-    <article>
+    <product>
       <Container className="px-0">
         <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
           <Col className="d-block mb-4 mb-md-0">
@@ -93,101 +154,162 @@ export default () => {
         <Row className="d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center py-4">
           <Col xs={12} className="d-block mb-4 mb-md-0">
             <Card>
-                <Card.Body>
-                    <Form className="row" onSubmit={e => handleSubmit(e)}>
-                        <Form.Group className="mb-3 col-6">
-                            <Form.Label>Recommend level</Form.Label>
-                            <Form.Control as="select" value={recommendLevel} onChange={e => setRecommendLevel(e.target.value)} required>
-                            <option value="">Open this select menu</option>
-                            {
-                                recommendLevels.map((item, index) => (
-                                <option value={item.id} key={index}>{item.value}</option>
-                                ))
-                            }
-                            </Form.Control>
-                        </Form.Group>
-                        {
-                            recommendLevel === '1' && (
-                                <Form.Group className="mb-3 col-6">
-                                    <Form.Label>Domain</Form.Label>
-                                    <Form.Control as="select" value={domain} onChange={e => setDomain(e.target.value)} required>
-                                    <option value="">Open this select menu</option>
-                                    {
-                                        domains.map((item, index) => (
-                                        <option value={item.id} key={index}>{item.value}</option>
-                                        ))
-                                    }
-                                    </Form.Control>
-                                </Form.Group>
-                            )
-                        }
-                        {
-                            recommendLevel === '2' && (
-                                <Form.Group className="mb-3 col-6">
-                                    <Form.Label>Product</Form.Label>
-                                    <Form.Control as="select" value={product} onChange={e => setProduct(e.target.value)} required>
-                                    <option value="">Open this select menu</option>
-                                    {
-                                        products.map((item, index) => (
-                                        <option value={item.id} key={index}>{item.value}</option>
-                                        ))
-                                    }
-                                    </Form.Control>
-                                </Form.Group>
-                            )
-                        }
-                        {
-                            recommendLevel !== '2' && (
-                                <Form.Group className="mb-3 col-6">
-                                    <Form.Label>Recommend type</Form.Label>
-                                    <Form.Control as="select" value={recommendType} onChange={e => setRecommendType(e.target.value)} required>
-                                    <option value="">Open this select menu</option>
-                                    {
-                                        recommendTypes.map((item, index) => (
-                                        <option value={item.id} key={index}>{item.value}</option>
-                                        ))
-                                    }
-                                    </Form.Control>
-                                </Form.Group>
-                            )
-                        }
-                        <Form.Group className="mb-3 col-6">
-                            <Form.Label>Quantity</Form.Label>
-                            <Form.Control type="number" value={quantity} min={1} onChange={e => setQuantity(e.target.value)} required/>
-                        </Form.Group>
-                        <Row className="d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center">
-                            <Col xs={4} className="d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center">
-                                <Button variant="primary" className="m-1" type="submit">Submit</Button>
-                            </Col>
-                        </Row>
+              <Card.Body>
+                <Form className="row" onSubmit={(e) => handleSubmit(e)}>
+                  <Form.Group className="mb-3 col-6">
+                    <Form.Label>Item Type</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={itemType}
+                      onChange={(e) => handleChangeItemType(e.target.value)}
+                      required
+                    >
+                      <option value="">Open this select menu</option>
+                      {listItemTypes.map((item, index) => (
+                        <option value={item["value"]} key={index}>
+                          {item["name"]}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                  <Form.Group className="mb-3 col-6">
+                    <Form.Label>Recommend level</Form.Label>
+                    <Form.Control
+                      as="select"
+                      value={level}
+                      onChange={(e) =>
+                        handleChangeRecommendLevel(e.target.value)
+                      }
+                      required
+                    >
+                      <option value="">Open this select menu</option>
+                      {listLevels.map((item, index) => (
+                        <option value={item} key={index}>
+                          {item}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                  {level === "Domain" ? (
+                    <Form.Group className="mb-3 col-6">
+                      <Form.Label>Domain</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={domain}
+                        onChange={(e) => setDomain(e.target.value)}
+                        required
+                      >
+                        <option value="">Open this select menu</option>
+                        {listDomains.map((item, index) => (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  ) : (
+                    <></>
+                  )}
+                  {level === "Item" ? (
+                    <Form.Group className="mb-3 col-6">
+                      <Form.Label>{itemType}</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={item}
+                        onChange={(e) => setItem(e.target.value)}
+                        required
+                      >
+                        <option value="">Open this select menu</option>
+                        {listItems.map((item, index) => (
+                          <option value={item["id"]} key={index}>
+                            {itemType === "events"
+                              ? item["event_id"] + " - " + item["event_title"]
+                              : item["product_id"] +
+                                " - " +
+                                item["product_name"]}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  ) : (
+                    <></>
+                  )}
+                  {level === "General" || level === "Domain" ? (
+                    <Form.Group className="mb-3 col-6">
+                      <Form.Label>Recommend Type</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={recommendType}
+                        onChange={(e) => setRecommendType(e.target.value)}
+                        required
+                      >
+                        <option value="">Open this select menu</option>
+                        {listRecommendTypes.map((item, index) => (
+                          <option value={item} key={index}>
+                            {item}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  ) : (
+                    <></>
+                  )}
+                  <Form.Group className="mb-3 col-6">
+                    <Form.Label>Quantity</Form.Label>
+                    <Form.Control
+                      type="number"
+                      value={quantity}
+                      min={1}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      required
+                    />
+                  </Form.Group>
+                  <Row className="d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center">
+                    <Col
+                      xs={4}
+                      className="d-flex flex-wrap flex-md-nowrap justify-content-center align-items-center"
+                    >
+                      <Button variant="primary" className="m-1" type="submit">
+                        Get API
+                      </Button>
+                    </Col>
+                  </Row>
+                </Form>
+                {isSubmitted ? (
+                  <>
+                    <Form>
+                      <Form.Group className="mb-3 col-6">
+                        <Form.Label className="h2">
+                          API for integration
+                        </Form.Label>
+                        <Form.Control type="text" value={api} readOnly />
+                      </Form.Group>
                     </Form>
-                    {
-                        isSubmitted && (
-                            <>
-                                <Form>
-                                    <Form.Group className="mb-3 col-6">
-                                        <Form.Label className="h2">API for integration</Form.Label>
-                                        <Form.Control type="text" defaultValue={"127.0.0.1/dimadb/upcoming-events?qnty=10"} readOnly/>
-                                    </Form.Group>
-                                </Form>
-                                <Container className="px-0">
-                                    <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
-                                        <Col className="d-block mb-4 mb-md-0">
-                                            <h1 className="h2">Recommended Products (Event or Item)</h1>
-                                        </Col>
-                                    </Row>
-                                    {
-                                    columns.length && <ProcessTables columns={columns} data={currentResults}/>
-                                    }
-                                </Container>
-                            </>
-                        )
-                    }
-                </Card.Body>
+                    <Container className="px-0">
+                      <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
+                        <Col className="d-block mb-4 mb-md-0">
+                          <h1 className="h2">Recommended {itemType}</h1>
+                        </Col>
+                      </Row>
+                      {columns.length ? (
+                        <ProcessTables
+                          columns={columns}
+                          data={listResults}
+                          isDelete={false}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </Container>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </Card.Body>
             </Card>
           </Col>
         </Row>
       </Container>
-    </article>
+    </product>
   );
 };
