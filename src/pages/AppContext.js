@@ -1,65 +1,63 @@
-
-import React from 'react';
+import React from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
-import { domainPath } from '../constants/utils';
+import { domainPath } from "../constants/utils";
 
 export const AppContext = React.createContext();
 
-const AppContextProvider = ({children}) => {
-  const [userToken, setUserToken] = React.useState(false);        // store usertoken sent from server after login
-  const [userName, setUserName] = React.useState(false);
-  const [isLoadingSpinner, setLoadingSpinner] = React.useState(false);      // check whether app is sending any request, if YES => show loading spinner
+const AppContextProvider = ({ children }) => {
+  const [isLoadingSpinner, setLoadingSpinner] = React.useState(false); // check whether app is sending any request, if YES => show loading spinner
 
   const appContextData = {
-    userToken: userToken,
-    userName: userName,
     isLoadingSpinner: isLoadingSpinner,
-    fetchRequest: async function (endpoint, method, body=null, isJSON=true) {
-        setLoadingSpinner(true);
-        
-        let url = domainPath + endpoint;
-        let info = {
-            method: method,
-            headers: {
-                Authorization: "JWT " + userToken,
+    fetchRequest: async function (
+      endpoint,
+      method,
+      body = null,
+      isJSON = true
+    ) {
+      setLoadingSpinner(true);
+
+      let url = domainPath + endpoint;
+      let info = {
+        method: method,
+        headers: {
+          Authorization: "JWT " + localStorage.getItem('token'),
+        },
+      };
+
+      if (isJSON) {
+        info["headers"]["Content-Type"] = "application/json";
+      }
+
+      if (body !== null) {
+        info["body"] = body;
+      }
+
+      const result = await fetch(url, info)
+        .then(async (res) => {
+          let data = await res.json();
+
+          if (res.status === 200) {
+            return data;
+          } else {
+            if (data.message) {
+              alert(data.message);
+            } else {
+              alert("Internal error server");
             }
-        }
+          }
+        })
+        .catch((err) => alert(err));
 
-        if (isJSON) {
-            info['headers']['Content-Type'] = "application/json"
-        }
-
-        if (body !== null) {
-            info['body'] = body
-        }
-
-        const result = await fetch(url, info)
-            .then(async (res) => {
-              let data = await res.json();
-      
-              if (res.status === 200) {
-                return data;
-              } else {
-                if (data.message) {
-                  alert(data.message);
-                } else {
-                  alert("Internal error server");
-                }
-              }
-            })
-            .catch((err) => alert(err));
-        
-        setLoadingSpinner(false);
-        return result;
+      setLoadingSpinner(false);
+      return result;
     },
-    setUserToken: setUserToken,
-    setUserName: setUserName,
   };
 
   return (
     <AppContext.Provider value={appContextData}>
-        {isLoadingSpinner ? <LoadingSpinner /> : <></>}
-        {children}
+      {isLoadingSpinner ? <LoadingSpinner /> : <></>}
+      {children}
     </AppContext.Provider>
   );
 };

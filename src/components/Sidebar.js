@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import SimpleBar from "simplebar-react";
 import { useLocation, useHistory } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
@@ -24,12 +24,10 @@ import { Link } from "react-router-dom";
 import { Routes } from "../routes";
 import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
 import Logo from "../assets/img/technologies/logo.svg";
-import { AppContext } from "../pages/AppContext";
 
 export default (props = {}) => {
   const location = useLocation();
   const history = useHistory();
-  const { setUserToken, setUserName } = useContext(AppContext);
   const [show, setShow] = useState(false);
   const { pathname } = location;
   const showClass = show ? "show" : "";
@@ -37,8 +35,8 @@ export default (props = {}) => {
   const onCollapse = () => setShow(!show);
 
   const handleLogout = () => {
-    setUserToken("");
-    setUserName("");
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     history.push("/sign-in");
   };
 

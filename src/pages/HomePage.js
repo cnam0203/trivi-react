@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Routes } from "../routes";
-import { AppContext } from "./AppContext";
 
 // pages
 import Form from "./Form";
@@ -61,8 +60,7 @@ import Toasts from "./components/Toasts";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
-  const {userToken} = useContext(AppContext);
-  const login = userToken ? true : false;
+  const login = localStorage.getItem('token') ? true : false;
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 1000);
@@ -88,8 +86,7 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
 
 const RouteWithSidebar = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
-  const {userToken} = useContext(AppContext);
-  const login = userToken ? true : false;
+  const login = localStorage.getItem('token') ? true : false;
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 1000);

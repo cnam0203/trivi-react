@@ -50,9 +50,8 @@ export default class Signin extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.token) {
-          const { setUserToken, setUserName } = this.context;
-          setUserToken(json.token);
-          setUserName(json.user.username);
+          localStorage.setItem('token',json.token);
+          localStorage.setItem('userName', json.user.username);
           this.props.history.push("/");
         } else {
           alert("Your account is invalid");
