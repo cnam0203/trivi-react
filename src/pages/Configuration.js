@@ -31,8 +31,10 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-configure-info/`, 'GET')
     .then((data) => {
-      setListItemTypes(data.similarTrainInfo);
-      setWebActivityInfo(data.webActivityInfo)
+      if (data != undefined) {
+        setListItemTypes(data.similarTrainInfo);
+        setWebActivityInfo(data.webActivityInfo);
+      }
     }).catch((err) => alert(err));
   }, []);
 
@@ -43,7 +45,8 @@ export default () => {
     JSON.stringify({
       webActivityInfo: webActivityInfo,
     })).then((data) => {
-      alert(`Finish updating weight`);
+      if (data != undefined)
+        alert(`Finish updating weight`);
     }).catch((err) => alert(err));
   };
 
@@ -54,8 +57,10 @@ export default () => {
     JSON.stringify({
       itemType: itemType,
     })).then((data) => {
-      setListItemTypes(data.similarTrainInfo)
-      alert(`Finish recommendation training`);
+      if (data != undefined) {
+        setListItemTypes(data.similarTrainInfo)
+        alert(`Finish recommendation training`);
+      }
     }).catch((err) => alert(err));
   };
 

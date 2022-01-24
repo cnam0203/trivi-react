@@ -39,8 +39,10 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/list-item/${itemType}/`, 'GET')
     .then((data) => {
-      setAllItems(data.items);
-      setIsViewDetail(data.isViewDetail);
+      if (data != undefined) {
+        setAllItems(data.items);
+        setIsViewDetail(data.isViewDetail);
+      }
     }).catch((err) => alert(err));
   }, []);
 

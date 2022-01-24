@@ -53,10 +53,12 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-recommend-info/`, "GET")
       .then((data) => {
-        setListEvents(data.events);
-        setListProducts(data.products);
-        setListEventTypes(data.eventTypes);
-        setListArticleTypes(data.articleTypes);
+        if (data != undefined) {    
+          setListEvents(data.events);
+          setListProducts(data.products);
+          setListEventTypes(data.eventTypes);
+          setListArticleTypes(data.articleTypes);
+        }
       })
       .catch((err) => {
         alert(err);
@@ -79,12 +81,14 @@ export default () => {
       })
     )
       .then((data) => {
-        if (data.items) {
-          setSubmit(true);
-          setListResults(data.items);
-          setAPI(data.api);
-        } else {
-          setSubmit(false);
+        if (data != undefined) {  
+          if (data.items) {
+            setSubmit(true);
+            setListResults(data.items);
+            setAPI(data.api);
+          } else {
+            setSubmit(false);
+          }
         }
       })
       .catch((err) => {

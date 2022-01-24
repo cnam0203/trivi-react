@@ -47,7 +47,7 @@ const AppContextProvider = ({ children }) => {
             }
           }
         })
-        .catch((err) => alert(err));
+        .catch((err) => alert("Failed request"));
 
       setLoadingSpinner(false);
       return result;

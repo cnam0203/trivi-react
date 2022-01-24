@@ -29,7 +29,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-mapping-templates/${itemType}/`, 'GET')
     .then((data) => {
-      setListTemplates(data.listTemplates);
+      if (data != undefined)
+        setListTemplates(data.listTemplates);
     }).catch((err) => alert(err));
   }, []);
 
@@ -60,8 +61,10 @@ export default () => {
 
     fetchRequest(`dimadb/import-file/${itemType}/`, 'POST', data, false)
     .then((result) => {
-      alert(result.message);
-      history.go(0);
+      if (result != undefined) {
+        alert(result.message);
+        history.go(0);
+      }
     }).catch((err) => alert(err));
   };
 

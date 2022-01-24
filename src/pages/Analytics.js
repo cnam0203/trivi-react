@@ -21,7 +21,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-reports/?${getQueryParams()}`, 'GET')
     .then((data) => {
-      setCharts(data.reports);
+      if (data != undefined)
+        setCharts(data.reports);
     }).catch((err) => alert(err));
   }, []);
 
@@ -30,7 +31,8 @@ export default () => {
 
     fetchRequest(`dimadb/get-reports/?${getQueryParams()}`, 'GET')
     .then((data) => {
-      setCharts(data.reports);
+      if (data != undefined)
+        setCharts(data.reports);
     }).catch((err) => alert(err));
   }
 

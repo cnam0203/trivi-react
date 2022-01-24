@@ -29,7 +29,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-mapping-templates/${itemType}/`, 'GET')
     .then((data) => {
-      setListTemplates(data.listTemplates);
+      if (data != undefined) 
+        setListTemplates(data.listTemplates);
     }).catch((err) => alert(err));
   }, []);
 
@@ -50,9 +51,11 @@ export default () => {
       template: template
     }))
     .then((data) => {
-      alert(data.message);
-      const newUrl = `/data-management/list/${itemType}`;
-      history.push(newUrl);
+      if (data != undefined) {
+        alert(data.message);
+        const newUrl = `/data-management/list/${itemType}`;
+        history.push(newUrl);
+      }
     }).catch((err) => alert(err));
 
   };

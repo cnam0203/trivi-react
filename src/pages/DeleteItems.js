@@ -31,7 +31,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-import-info/${itemType}/`, "GET")
       .then((data) => {
-        setAllItems(data.items);
+        if (data != undefined)
+          setAllItems(data.items);
       })
       .catch((err) => alert(err));
   }, []);
@@ -42,8 +43,10 @@ export default () => {
       "DELETE"
     )
       .then((data) => {
-        alert(`Delete ${itemType} successfully`);
-        history.go(0);
+        if (data != undefined) {
+          alert(`Delete ${itemType} successfully`);
+          history.go(0);
+        }
       })
       .catch((err) => alert(err));
   };

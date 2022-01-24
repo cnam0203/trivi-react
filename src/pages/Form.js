@@ -215,7 +215,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-item/${itemType}/${id}`, "GET")
       .then((data) => {
-        setFormInfo(data);
+        if (data != undefined)
+          setFormInfo(data);
       })
       .catch((err) => alert(err));
   }, []);

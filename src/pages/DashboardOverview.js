@@ -102,15 +102,17 @@ export default () => {
   useEffect(() => {
     fetchRequest("dimadb/home/", 'GET')
     .then((data) => {
-      var listCharts = data.reports.map((chart, index) => {
-        var newChart = createChart(chart.title, chart.data, chart.type);
-        return newChart;
-      });
-      setCharts(listCharts);
-      setWebActivities(data.webActivities);
-      setSessions(data.sessions);
-      setTraffic(data.traffic);
-      setPages(data.pages);
+      if (data != undefined) {
+        var listCharts = data.reports.map((chart, index) => {
+          var newChart = createChart(chart.title, chart.data, chart.type);
+          return newChart;
+        });
+        setCharts(listCharts);
+        setWebActivities(data.webActivities);
+        setSessions(data.sessions);
+        setTraffic(data.traffic);
+        setPages(data.pages);
+      }
     }).catch((err) => alert(err));
   }, []);
 
