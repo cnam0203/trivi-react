@@ -157,7 +157,7 @@ const FormElement = ({
         </Form.Control>
       </Form.Group>
     );
-  } else if (formInfo.type === "array") {
+  } else if (formInfo.type === "m2m" || formInfo.type === "o2m") {
     return (
       <>
         {formInfo.value.map((value, index) =>
@@ -215,8 +215,8 @@ export default () => {
   useEffect(() => {
     fetchRequest(`dimadb/get-item/${itemType}/${id}`, "GET")
       .then((data) => {
-        if (data != undefined)
-          setFormInfo(data);
+        console.log(data)
+        setFormInfo(data);
       })
       .catch((err) => alert(err));
   }, []);

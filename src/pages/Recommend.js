@@ -14,7 +14,7 @@ import { AppContext } from "./AppContext";
 export default () => {
   TabTitle("Recommend");
 
-  const listLevels = ["General", "Domain", "Item"];
+  const listLevels = ["Homepage", "Domain", "Item"];
   const listItemTypes = [
     {
       name: "Événements",
@@ -25,7 +25,7 @@ export default () => {
       value: "products",
     },
   ];
-  const listRecommendTypes = ["Upcomming", "Most popular"];
+  const listRecommendTypes = ["Upcoming", "Most popular"];
 
   const { fetchRequest } = useContext(AppContext);
   const [level, setLevel] = useState("");
@@ -43,6 +43,7 @@ export default () => {
   const [isSubmitted, setSubmit] = useState(false);
   const [listResults, setListResults] = useState([]);
   const [api, setAPI] = useState("");
+  const [apiKey, setAPIKey] = useState("");
 
   const columns = listResults.length
     ? Object.keys(listResults[0]).map((key) => {
@@ -77,7 +78,7 @@ export default () => {
         recommendType: recommendType,
         quantity: quantity,
         domain: domain,
-        item: item,
+        itemId: item,
       })
     )
       .then((data) => {
@@ -86,6 +87,7 @@ export default () => {
             setSubmit(true);
             setListResults(data.items);
             setAPI(data.api);
+            setAPIKey(data.apiKey);
           } else {
             setSubmit(false);
           }
@@ -238,7 +240,7 @@ export default () => {
                   ) : (
                     <></>
                   )}
-                  {level === "General" || level === "Domain" ? (
+                  {level === "Homepage" || level === "Domain" ? (
                     <Form.Group className="mb-3 col-6">
                       <Form.Label>Recommend Type</Form.Label>
                       <Form.Control
@@ -287,6 +289,12 @@ export default () => {
                           API for integration
                         </Form.Label>
                         <Form.Control type="text" value={api} readOnly />
+                      </Form.Group>
+                      <Form.Group className="mb-3 col-6">
+                        <Form.Label className="h2">
+                          API Key
+                        </Form.Label>
+                        <Form.Control type="text" value={apiKey} readOnly />
                       </Form.Group>
                     </Form>
                     <Container className="px-0">
