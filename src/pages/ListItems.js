@@ -58,11 +58,13 @@ export default () => {
   };
 
   const handleImportFile = (e) => {
+    window.gtag('event', 'import_file');
     const url = `/data-management/import-file/${itemType}`;
     history.push(url);
   };
 
   const handleImportAPI = (e) => {
+    window.gtag('event', 'import_api');
     const url = `/data-management/import-api/${itemType}`;
     history.push(url);
   };

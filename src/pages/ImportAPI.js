@@ -43,6 +43,7 @@ export default () => {
   const handleCloseModal = () => {setShowModal(false)};
 
   const handleImportAPI = () => {
+    window.gtag('event', 'import_api');
     fetchRequest(`dimadb/import-api/`, 'POST',
     JSON.stringify({
       itemType: itemType,
