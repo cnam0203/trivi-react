@@ -171,7 +171,7 @@ export default (props = {}) => {
                 image={Logo}
               />
               <NavItem
-                title="Aperçu"
+                title="Tableau de bord"
                 link={Routes.DashboardOverview.path}
                 icon={faChartPie}
               />
@@ -265,7 +265,7 @@ export default (props = {}) => {
                 onClick={handleLogout}
               >
                 <FontAwesomeIcon icon={faSignOutAlt} className="me-1" />
-                Sign out
+                Déconnexion
               </Button>
             </Nav>
           </div>

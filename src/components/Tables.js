@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
@@ -36,6 +36,8 @@ export const PageVisitsTable = ({pages}) => {
     );
   };
 
+  const [isAll, setAll] = useState(false);
+
   return (
     <Card border="light" className="shadow-sm">
       <Card.Header>
@@ -44,7 +46,7 @@ export const PageVisitsTable = ({pages}) => {
             <h5>Page visits</h5>
           </Col>
           <Col className="text-end">
-            <Button variant="secondary" size="sm">See all</Button>
+            <Button variant="secondary" size="sm" onClick={() => setAll(!isAll)}>{isAll ? 'Show less' : 'See all'}</Button>
           </Col>
         </Row>
       </Card.Header>
@@ -56,7 +58,7 @@ export const PageVisitsTable = ({pages}) => {
           </tr>
         </thead>
         <tbody>
-          {pages.map((pv, index) => <TableRow key={`page-visit-${index}`} {...pv} />)}
+          {pages.slice(0, isAll ? pages.length : 5).map((pv, index) => <TableRow key={`page-visit-${index}`} {...pv} />)}
         </tbody>
       </Table>
     </Card>

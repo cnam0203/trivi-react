@@ -229,7 +229,7 @@ export default () => {
                         {listItems.map((item, index) => (
                           <option value={item["id"]} key={index}>
                             {itemType === "events"
-                              ? item["event_id"] + " - " + item["event_title"]
+                              ? item["event_id"] + " - " + item["event_name"]
                               : item["product_id"] +
                                 " - " +
                                 item["product_name"]}

@@ -30,27 +30,26 @@ export default (props) => {
             </Form>
           </div>
           <Nav className="align-items-center">
-            {/* <Dropdown as={Nav.Item}>
+            <Dropdown as={Nav.Item}>
               <Dropdown.Toggle as={Nav.Link} className="pt-1 px-0">
                 <div className="media d-flex align-items-center">
-                  <Image src={Profile3} className="user-avatar md-avatar rounded-circle" />
+                  {/* <Image src={faUserShield} className="user-avatar md-avatar rounded-circle" /> */}
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span className="mb-0 font-small fw-bold">{userName || 'Unknown'}</span>
+                    <FontAwesomeIcon icon={faUserCircle} className="me-2" /> 
+                    <span className="mb-0 font-small fw-bold">{localStorage.getItem('userName') || 'Unknown'}</span>
                   </div>
                 </div>
               </Dropdown.Toggle>
               <Dropdown.Menu className="user-dropdown dropdown-menu-right mt-2">
                 <Dropdown.Item className="fw-bold" as={Link} to={Routes.Profile.path}>
-                  <FontAwesomeIcon icon={faUserCircle} className="me-2" /> My Profile
+                  <FontAwesomeIcon icon={faUserCircle} className="me-2" /> Changer mot de pass
                 </Dropdown.Item>
 
-                <Dropdown.Divider />
-
-                <Dropdown.Item className="fw-bold">
+                {/* <Dropdown.Item className="fw-bold">
                   <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
-                </Dropdown.Item>
+                </Dropdown.Item> */}
               </Dropdown.Menu>
-            </Dropdown> */}
+            </Dropdown>
           </Nav>
         </div>
       </Container>

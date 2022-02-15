@@ -44,7 +44,7 @@ export default () => {
 
   const handleImportAPI = () => {
     window.gtag('event', 'import_api');
-    fetchRequest(`dimadb/import-api/`, 'POST',
+    fetchRequest(`dimadb/import-api/${itemType}/`, 'POST',
     JSON.stringify({
       itemType: itemType,
       url: urlAPI,

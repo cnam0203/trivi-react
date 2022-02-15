@@ -42,7 +42,7 @@ export default () => {
         <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
           <Form className='row' onSubmit={(e) => handleSubmitForm(e)}>
             <Form.Group className="mb-3 col-6">
-              <Form.Label>From date</Form.Label>
+              <Form.Label>Date de début</Form.Label>
               <Form.Control
                 type="date"
                 value={startDate}
@@ -53,7 +53,7 @@ export default () => {
               />
             </Form.Group>
             <Form.Group className="mb-3 col-6">
-              <Form.Label>To date</Form.Label>
+              <Form.Label>Date de fin</Form.Label>
               <Form.Control type="date" 
                 value={endDate}
                 onChange={(e) => {
@@ -62,7 +62,7 @@ export default () => {
                 min={startDate}/>
             </Form.Group>
             <Form.Group className="mb-3 col-6">
-              <Form.Label>Report By</Form.Label>
+              <Form.Label>Rapports par</Form.Label>
               <Form.Control
                 as="select"
                 value={groupType}
@@ -83,9 +83,9 @@ export default () => {
                 variant="primary"
                 className="m-1 mb-3"
                 type="submit"
-                style={{ width: 150 }}
+                style={{ width: 200 }}
               >
-                Get reports
+                Obtenir des rapports
               </Button>
             </Row>
           </Form>

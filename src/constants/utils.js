@@ -1,1 +1,7 @@
-export const domainPath = "http://localhost:8000/"
+export const domainPath = "http://3.129.66.167:8000/"
+
+
+
+
+
+

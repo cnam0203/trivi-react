@@ -28,7 +28,8 @@ export const Routes = {
     ListItems: { path: "/data-management/list/" },
     ImportAPI: { path: "/data-management/import-api/" },
     ImportFile: { path: "/data-management/import-file/" },
-    DeleteItems: { path: "/data-management/delete-items"},
+    ImportHistory: { path: "/data-management/import-history"},
+    DeleteItems: { path: "/data-management/delete-items/"},
 
     // docs
     DocsOverview: { path: "/documentation/overview" },

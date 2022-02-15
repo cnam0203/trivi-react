@@ -43,7 +43,7 @@ export default () => {
       series: chartData
         ? [
             {
-              name: "",
+              name: "Total",
               data: chartData,
               colorByPoint: true,
             },
@@ -55,6 +55,11 @@ export default () => {
       },
       xAxis: {
         type: "category",
+      },
+      yAxis: {
+        title: {
+          text: "value",
+        },
       },
       legend: {
         enabled: false,

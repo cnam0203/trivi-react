@@ -19,7 +19,7 @@ import { TabTitle } from "../constants/generalFunctions";
 import { AppContext } from "./AppContext";
 import { Routes } from "../routes";
 
-export default class Signin extends Component {
+export default class ForgotPassword extends Component {
   static contextType = AppContext;
 
   constructor(props) {
@@ -27,6 +27,7 @@ export default class Signin extends Component {
     this.state = {
       username: "",
       password: "",
+      confirmPassword: "",
     };
   }
 
@@ -40,9 +41,9 @@ export default class Signin extends Component {
     });
   };
 
-  handleLogin = (e, data) => {
+  handleReset = (e, data) => {
     e.preventDefault();
-    fetch(domainPath + "token-auth/", {
+    fetch(domainPath + "reset-password/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,11 +53,7 @@ export default class Signin extends Component {
       .then((res) => res.json())
       .then((json) => {
         if (json.token) {
-          localStorage.setItem('token',json.token);
-          localStorage.setItem('userName', json.user.username);
           this.props.history.push("/");
-        } else {
-          alert("Your account is invalid");
         }
       })
       .catch((err) => alert(err));
@@ -79,14 +76,14 @@ export default class Signin extends Component {
               >
                 <div className="bg-white shadow-soft border rounded border-primary p-4 p-lg-5 w-100 fmxw-500">
                   <div className="text-center text-md-center mb-4 mt-md-0">
-                    <h3 className="mb-0">Sign in to RecomSys</h3>
+                    <h3 className="mb-0">Reset new password</h3>
                   </div>
                   <div className="text-center text-md-center mb-4 mt-md-0">
                     <Image className="" src={ReactLogo} height={80} />
                   </div>
                   <Form
                     className="mt-4"
-                    onSubmit={(e) => this.handleLogin(e, this.state)}
+                    onSubmit={(e) => this.handleReset(e, this.state)}
                   >
                     <Form.Group id="email" className="mb-4">
                       <Form.Label>Your Email</Form.Label>
@@ -107,7 +104,7 @@ export default class Signin extends Component {
                     </Form.Group>
                     <Form.Group>
                       <Form.Group id="password" className="mb-4">
-                        <Form.Label>Your Password</Form.Label>
+                        <Form.Label>New Password</Form.Label>
                         <InputGroup>
                           <InputGroup.Text>
                             <FontAwesomeIcon icon={faUnlockAlt} />
@@ -122,14 +119,30 @@ export default class Signin extends Component {
                           />
                         </InputGroup>
                       </Form.Group>
-                      {/* <div className="d-flex justify-content-center align-items-center mb-4">
-                        <Card.Link  as={Link} to={Routes.ForgotPassword.path} className="small">
-                          Forget password?
+                      <Form.Group id="password" className="mb-4">
+                        <Form.Label>Confirm Password</Form.Label>
+                        <InputGroup>
+                          <InputGroup.Text>
+                            <FontAwesomeIcon icon={faUnlockAlt} />
+                          </InputGroup.Text>
+                          <Form.Control
+                            required
+                            type="password"
+                            placeholder="Password"
+                            name="password"
+                            value={this.state.confirmPassword}
+                            onChange={this.handleChange}
+                          />
+                        </InputGroup>
+                      </Form.Group>
+                      <div className="d-flex justify-content-center align-items-center mb-4">
+                        <Card.Link  as={Link} to={Routes.Signin.path} className="small">
+                          Back to Sign In
                         </Card.Link>
-                      </div> */}
+                      </div>
                     </Form.Group>
                     <Button variant="primary" type="submit" className="w-100">
-                      Sign in
+                      Reset
                     </Button>
                   </Form>
                 </div>

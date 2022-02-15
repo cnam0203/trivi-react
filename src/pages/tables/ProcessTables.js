@@ -13,7 +13,7 @@ import {
 } from "@themesberg/react-bootstrap";
 import { useTable, useSortBy, usePagination } from "react-table";
 
-export default ({ columns, data, isViewDetail = false, handleViewDetail, isDelete = false, handleDelete }) => {
+export default ({ columns, data, isViewDetail = false, handleViewDetail, isClick = false, clickTitle, handleClick }) => {
   const selections = [10, 20, 50, 100];
   const {
     getTableProps,
@@ -109,14 +109,14 @@ export default ({ columns, data, isViewDetail = false, handleViewDetail, isDelet
                             </td>
                           );
                         })}
-                        {isDelete ? 
+                        {isClick ? 
                           <td
                             className="border-0 fw-bold"
                           >
                             <Button
                               variant="primary"
-                              onClick={() => handleDelete(row.cells[0].value)}
-                            >Delete</Button>
+                              onClick={() => handleClick(row.cells[0].value)}
+                            >{clickTitle}</Button>
                           </td> : <></>
                         }
                       </tr>

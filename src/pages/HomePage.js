@@ -16,6 +16,8 @@ import Recommend from "./Recommend";
 import NotFoundPage from "./examples/NotFound";
 import ServerError from "./examples/ServerError";
 import DashboardOverview from "./DashboardOverview";
+import ForgotPassword from "./ForgotPassword";
+import ImportHistory from "./ImportHistory";
 
 // components
 import Sidebar from "../components/Sidebar";
@@ -28,7 +30,6 @@ import Transactions from "./Transactions";
 import Settings from "./Settings";
 import BootstrapTables from "./tables/BootstrapTables";
 import Signup from "./examples/Signup";
-import ForgotPassword from "./examples/ForgotPassword";
 import ResetPassword from "./examples/ResetPassword";
 import Lock from "./examples/Lock";
 import Profile from "./Profile";
@@ -176,6 +177,7 @@ export default () => (
     <RouteWithSidebar path={Routes.ItemDetail.path} component={Form} />
     <RouteWithSidebar path={Routes.ImportAPI.path} component={ImportAPI} />
     <RouteWithSidebar path={Routes.ImportFile.path} component={ImportFile} />
+    <RouteWithSidebar path={Routes.ImportHistory.path} component={ImportHistory} />
     <RouteWithSidebar path={Routes.DeleteItems.path} component={DeleteItems} />
     <RouteWithSidebar
       exact
@@ -197,6 +199,12 @@ export default () => (
       path={Routes.Documentation.path}
       component={Documentation}
     />
+    <RouteWithLoader
+      exact
+      path={Routes.ForgotPassword.path}
+      component={ForgotPassword}
+    />
+    <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} />
     <Redirect to={Routes.NotFound.path} />
     {/* <RouteWithSidebar exact path={Routes.Profile.path} component={Profile} />
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />

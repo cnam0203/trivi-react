@@ -69,8 +69,8 @@ export default () => {
     history.push(url);
   };
 
-  const handleDeleteItems = (e) => {
-    const url = `/data-management/delete-items/${itemType}`;
+  const handleImportHistory = (e) => {
+    const url = `/data-management/import-history/${itemType}`;
     history.push(url);
   };
 
@@ -142,9 +142,9 @@ export default () => {
             <Button
               variant="danger"
               className="m-1"
-              onClick={() => handleDeleteItems()}
+              onClick={() => handleImportHistory()}
             >
-              Delete Items
+              Import history
             </Button>
           </Col>
           <Col xs={3} className="mb-4">

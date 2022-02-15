@@ -5,72 +5,46 @@ import {
   Col,
   Row,
   Container,
-  Button,
   Form,
   InputGroup,
 } from "@themesberg/react-bootstrap";
 import { useHistory, useLocation } from "react-router";
-import { CSVLink } from "react-csv";
 import ProcessTables from "./tables/ProcessTables";
-import { TabTitle, capitalize } from "../constants/generalFunctions";
+import { TabTitle } from "../constants/generalFunctions";
 import { AppContext } from "./AppContext";
 
 export default () => {
-  const {fetchRequest} = useContext(AppContext);
+  TabTitle("Import History");
+
+  const { fetchRequest } = useContext(AppContext);
   const history = useHistory();
   const location = useLocation();
-  const urlArrays = location.pathname.split("/");
-  const itemType = urlArrays[urlArrays.length - 2];
-  const importId = urlArrays[urlArrays.length - 1];
-  const [isViewDetail, setIsViewDetail] = useState(false);
   const [items, setItems] = useState([]);
   const [searchItems, setSearchItems] = useState([]);
-  const headerKeys = searchItems.length
-    ? Object.keys(searchItems[0]).map((key) => {
-        return { label: key, key: key };
-      })
-    : [];
+  const itemType = location.pathname.split("/").slice(-1)[0];
   const columns = searchItems.length
     ? Object.keys(searchItems[0]).map((key) => {
         return { Header: key, accessor: key };
       })
     : [];
 
-  TabTitle(capitalize(itemType));
-
   useEffect(() => {
-    fetchRequest(`dimadb/list-item/${itemType}/?importId=${importId}`, 'GET')
-    .then((data) => {
-      if (data != undefined) {
-        setAllItems(data.items);
-        setIsViewDetail(data.isViewDetail);
-      }
-    }).catch((err) => alert(err));
+    fetchRequest(`dimadb/get-import-info/${itemType}/`, "GET")
+      .then((data) => {
+        if (data != undefined)
+          setAllItems(data.items);
+      })
+      .catch((err) => alert(err));
   }, []);
+
+  const handleClick = (importId) => {
+    const url = `/data-management/delete-items/${itemType}/${importId}`;
+    history.push(url);
+  };
 
   const setAllItems = (json, level = 2) => {
     if (level >= 2) setItems(json);
     if (level >= 1) setSearchItems(json);
-  };
-
-  const handleViewDetail = (row) => {
-    const id = row["id"];
-    const url = `/data-management/detail/${itemType}/${id}`;
-    history.push(url);
-  };
-
-  const handleDeleteAll = (e) => {
-    fetchRequest(
-      `dimadb/delete-multiple-items/${itemType}/${importId}/`,
-      "DELETE"
-    )
-      .then((data) => {
-        if (data != undefined) {
-          alert(`Delete ${itemType} successfully`);
-          history.go(-1);
-        }
-      })
-      .catch((err) => alert(err));
   };
 
   const searchKeyWord = (keyword) => {
@@ -98,19 +72,11 @@ export default () => {
       <Container className="px-0">
         <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
           <Col className="d-block mb-4 mb-md-0">
-            <h1 className="h2">Tables</h1>
+            <h1 className="h2">Import History</h1>
           </Col>
         </Row>
         <Row>
-          <Col xs={9} className="mb-4">
-            <Button
-              variant="danger"
-              className="m-1"
-              onClick={() => handleDeleteAll()}
-            >
-              Delete All
-            </Button>
-          </Col>
+          <Col xs={9} className="mb-4"></Col>
           <Col xs={3} className="mb-4">
             <Form.Group>
               <InputGroup className="input-group-merge">
@@ -137,8 +103,11 @@ export default () => {
           <ProcessTables
             columns={columns}
             data={searchItems}
-            isViewDetail={isViewDetail}
-            handleViewDetail={handleViewDetail}
+            isViewDetail={false}
+            handleViewDetail={() => {}}
+            isClick={true}
+            clickTitle={'View records'}
+            handleClick={handleClick}
           />
         ) : (
           <></>
