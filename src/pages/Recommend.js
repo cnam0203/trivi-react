@@ -44,6 +44,7 @@ export default () => {
   const [listResults, setListResults] = useState([]);
   const [api, setAPI] = useState("");
   const [apiKey, setAPIKey] = useState("");
+  const [embeddedLink, setEmbeddedLink] = useState("");
 
   const columns = listResults.length
     ? Object.keys(listResults[0]).map((key) => {
@@ -88,6 +89,7 @@ export default () => {
             setListResults(data.items);
             setAPI(data.api);
             setAPIKey(data.apiKey);
+            setEmbeddedLink(data.embeddedLink)
           } else {
             setSubmit(false);
           }
@@ -295,6 +297,12 @@ export default () => {
                           API Key
                         </Form.Label>
                         <Form.Control type="text" value={apiKey} readOnly />
+                      </Form.Group>
+                      <Form.Group className="mb-3 col-12">
+                        <Form.Label className="h2">
+                          Embedded Link
+                        </Form.Label>
+                        <Form.Control as="textarea" value={embeddedLink} rows={15} readOnly />
                       </Form.Group>
                     </Form>
                     <Container className="px-0">
